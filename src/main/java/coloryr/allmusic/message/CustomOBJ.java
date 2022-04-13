@@ -4,7 +4,7 @@ public class CustomOBJ {
     private String Info;
 
     public CustomOBJ() {
-        Info = "自定义音乐";
+        Info = "来自网易云音乐之外的曲目";
     }
 
     public boolean check(){

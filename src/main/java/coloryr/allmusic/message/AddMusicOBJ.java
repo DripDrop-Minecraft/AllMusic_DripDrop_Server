@@ -7,6 +7,7 @@ public class AddMusicOBJ {
     private String Success;
     private String NoPlayer;
     private String NoID;
+    private String BadUrl;
 
     public AddMusicOBJ() {
         ListFull = "§d[AllMusic]§c错误，队列已满";
@@ -14,7 +15,8 @@ public class AddMusicOBJ {
         ExistMusic = "§d[AllMusic]§c错误，这首歌已经存在了";
         Success = "§d[AllMusic]§2点歌成功";
         NoPlayer = "§d[AllMusic]§c没有播放的玩家";
-        NoID = "§d[AllMusic]§c错误，请输入歌曲数字ID";
+        NoID = "§d[AllMusic]§c网易云歌曲数字ID错误，请确认输入正确的歌曲数字ID";
+        BadUrl = "§d[AllMusic]§c无法解析，请输入正确的外部歌曲链接";
     }
 
     public boolean check() {
@@ -30,8 +32,15 @@ public class AddMusicOBJ {
             return true;
         if (NoID == null)
             return true;
+        if (BadUrl == null) {
+            return true;
+        }
 
         return false;
+    }
+
+    public String getBadUrl() {
+        return BadUrl;
     }
 
     public String getNoID() {

@@ -1,7 +1,7 @@
 name: AllMusic
 main: coloryr.allmusic.AllMusicBukkit
-author: Color_yr
-version: 2.14.9
+author: Color_yr & DripDrop
+version: 2.15.1
 loadbefore: [PlaceholderAPI, Vault, Essentials, CMI]
 
 commands:

@@ -24,6 +24,7 @@ public class CommandEX {
 
     private static void addMusic(Object sender, String name, String[] args) {
         String musicID;
+
         if (args[0].contains("id=") && !args[0].contains("/?userid")) {
             if (args[0].contains("&user"))
                 musicID = Function.getString(args[0], "id=", "&user");
@@ -34,8 +35,10 @@ public class CommandEX {
                 musicID = Function.getString(args[0], "song/", "/?userid");
             else
                 musicID = Function.getString(args[0], "song/", null);
-        } else
+        } else {
             musicID = args[0];
+        }
+
         if (Function.isInteger(musicID)) {
             if (PlayMusic.getSize() >= AllMusic.getConfig().getMaxList()) {
                 AllMusic.side.sendMessage(sender, AllMusic.getMessage().getAddMusic().getListFull());
@@ -63,11 +66,25 @@ public class CommandEX {
                                 AllMusic.getMessage().getCost().getAddMusic()
                                         .replace("%Cost%", "" + AllMusic.getConfig().getAddMusicCost()));
                     }
-                } else
+                } else {
                     AllMusic.side.sendMessage(sender, AllMusic.getMessage().getAddMusic().getNoPlayer());
+                }
             }
-        } else
-            AllMusic.side.sendMessage(sender, AllMusic.getMessage().getAddMusic().getNoID());
+        } else {
+            // 如果传入的参数不是网易云音乐的曲目链接或者曲目数字ID，就走外部曲目链接的解析逻辑
+            // 目前仅适配了网站 http://tools.liumingye.cn/music/?page=searchPage 的歌曲链接
+            // 并且不能解析播放FLAC的音源
+            if (musicID.contains("listenSong.do") && musicID.contains("contentId")
+                    && musicID.contains("toneFlag") && musicID.contains("&resourceType=2&")) {
+                MusicObj obj = new MusicObj();
+                obj.isUrl = true;
+                obj.url = musicID;
+                PlayMusic.addTask(obj);
+                AllMusic.side.sendMessage(sender, AllMusic.getMessage().getAddMusic().getSuccess());
+            } else {
+                AllMusic.side.sendMessage(sender, AllMusic.getMessage().getAddMusic().getBadUrl());
+            }
+        }
     }
 
     public static void showSearch(Object sender, SearchPage search) {
@@ -127,8 +144,6 @@ public class CommandEX {
                         AllMusic.getMessage().getClick().This, "/music next");
                 AllMusic.side.sendMessageSuggest(sender, AllMusic.getMessage().getHelp().getAdmin().getBan(),
                         AllMusic.getMessage().getClick().Check, "/music ban ");
-                AllMusic.side.sendMessageSuggest(sender, AllMusic.getMessage().getHelp().getAdmin().getUrl(),
-                        AllMusic.getMessage().getClick().Check, "/music url ");
                 AllMusic.side.sendMessageSuggest(sender, AllMusic.getMessage().getHelp().getAdmin().getDelete(),
                         AllMusic.getMessage().getClick().Check, "/music delete ");
                 AllMusic.side.sendMessageSuggest(sender, AllMusic.getMessage().getHelp().getAdmin().getAddList(),
@@ -311,15 +326,15 @@ public class CommandEX {
                 }
             }
             return;
-        } else if (args[0].equalsIgnoreCase("reload")) {
-            AllMusic.side.reload();
-            AllMusic.side.sendMessage(sender, "§d[AllMusic]§2已重读配置文件");
-            return;
         } else if (AllMusic.getConfig().getAdmin().contains(name)) {
             if (args[0].equalsIgnoreCase("next")) {
                 PlayMusic.musicLessTime = 1;
                 AllMusic.side.sendMessage(sender, "§d[AllMusic]§2已强制切歌");
                 AllMusic.getConfig().RemoveNoMusicPlayer(name);
+                return;
+            } else if (args[0].equalsIgnoreCase("reload")) {
+                AllMusic.side.reload();
+                AllMusic.side.sendMessage(sender, "§d[AllMusic]§2已重读配置文件");
                 return;
             } else if (args[0].equalsIgnoreCase("ban") && args.length == 2) {
                 if (Function.isInteger(args[1])) {
@@ -328,13 +343,6 @@ public class CommandEX {
                 } else {
                     AllMusic.side.sendMessage(sender, "§d[AllMusic]§2请输入有效的ID");
                 }
-                return;
-            } else if (args[0].equalsIgnoreCase("url") && args.length == 2) {
-                MusicObj obj = new MusicObj();
-                obj.isUrl = true;
-                obj.url = args[1];
-                PlayMusic.addTask(obj);
-                AllMusic.side.sendMessage(sender, AllMusic.getMessage().getAddMusic().getSuccess());
                 return;
             } else if (args[0].equalsIgnoreCase("delete") && args.length == 2) {
                 if (!args[1].isEmpty() && Function.isInteger(args[1])) {
