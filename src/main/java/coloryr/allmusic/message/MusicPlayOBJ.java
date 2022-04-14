@@ -20,11 +20,11 @@ public class MusicPlayOBJ {
         Play = "§d[AllMusic]§2正在播放：%MusicName% | %MusicAuthor% | %MusicAl% | %MusicAlia% | by: %PlayerName%";
         NoPlay = "§d[AllMusic]§2队列中无歌曲";
         ListMusic = new ListMusicOBJ();
-        NoCanPlay = "§d[AllMusic]§c无法播放歌曲%MusicID%可能该歌曲为单独付费歌曲";
+        NoCanPlay = "§d[AllMusic]§c无法播放歌曲%MusicID%，可能该歌曲ID错误或为单独付费歌曲";
         NoPlayMusic = "§d[AllMusic]§2你不会再收到点歌了！想要再次参与点歌就点一首歌吧！";
         Switch = "§d[AllMusic]§2切换到玩家歌曲";
-        AddMusic = "§d[AllMusic]§2音乐列表添加%MusicName% | %MusicAuthor% | %MusicAl% | %MusicAlia%";
-        PlayerAdd = "§d[AllMusic]§2%PlayerName%点歌%MusicID%";
+        AddMusic = "§d[AllMusic]§2音乐列表添加 %MusicName% | %MusicAuthor% | %MusicAl% | %MusicAlia%";
+        PlayerAdd = "§d[AllMusic]§2%PlayerName%点歌：%MusicID%";
         MusicInfo = "%MusicName% | %MusicAuthor% | %MusicAl% | %MusicAlia% | by: %PlayerName%";
         Trail = "§d[AllMusic]§2该音乐为试听音乐";
     }

@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PlayMusic {
 
@@ -54,7 +56,7 @@ public class PlayMusic {
                 MusicObj obj = tasks.poll();
                 if (obj != null) {
                     if (obj.isUrl) {
-                        addUrl(obj.url);
+                        addUrl(obj.url, obj.name);
                     } else {
                         addMusic((String) obj.sender, obj.name, obj.isDefault);
                     }
@@ -71,8 +73,7 @@ public class PlayMusic {
         if (isHave(ID))
             return;
         String text = AllMusic.getMessage().getMusicPlay().getPlayerAdd();
-        text = text.replace("%PlayerName%", player)
-                .replace("%MusicID%", ID);
+        text = text.replace("%PlayerName%", player).replace("%MusicID%", ID);
         AllMusic.side.bqt(text);
         logs.logWrite("玩家：" + player + " 点歌：" + ID);
         try {
@@ -153,21 +154,43 @@ public class PlayMusic {
         return false;
     }
 
-    private static void addUrl(String arg) {
+    private static void addUrl(String arg, String player) {
         try {
             URL urlfile = new URL(arg);
             URLConnection con = urlfile.openConnection();
-            int b = con.getContentLength();// 得到音乐文件的总长度
+            // 得到音乐文件的总长度
+            int b = con.getContentLength();
             BufferedInputStream bis = new BufferedInputStream(con.getInputStream());
             Bitstream bt = new Bitstream(bis);
             Header h = bt.readFrame();
             int le = (int) h.total_ms(b);
-            SongInfo info = new SongInfo(AllMusic.getMessage().getCustom().getInfo(), arg, le);
+            String songName = AllMusic.getMessage().getCustom().getInfo() + getCustomSongId(arg);
+            SongInfo info = new SongInfo(player, songName, arg, le);
+            // 聊天栏展示“玩家xxx点歌：外部歌曲xxxxxxxx”
+            AllMusic.side.bqt(AllMusic.getMessage().getMusicPlay().getPlayerAdd()
+                    .replace("%PlayerName%", player).replace("%MusicID%", songName));
+            logs.logWrite("玩家：" + player + " 点歌：" + songName);
             playList.add(info);
+            // 聊天栏展示“音乐列表添加 外部歌曲xxxxxxxx | -- | -- |”
+            AllMusic.side.bqt(AllMusic.getMessage().getMusicPlay().getAddMusic()
+                    .replace("%MusicName%", info.getName())
+                    .replace("%MusicAuthor%", info.getAuthor())
+                    .replace("%MusicAl%", info.getAl())
+                    .replace("%MusicAlia%", info.getAlia()));
         } catch (Exception e) {
             AllMusic.log.warning("§d[AllMusic]§c歌曲信息解析错误");
             e.printStackTrace();
         }
+    }
+
+    private static String getCustomSongId(String url) {
+        String name = "";
+        Pattern pattern = Pattern.compile("contentId=\\d+");
+        Matcher matcher = pattern.matcher(url);
+        while (matcher.find()) {
+            name = url.substring(matcher.start(), matcher.end()).replace("contentId=", "");
+        }
+        return name;
     }
 }
 

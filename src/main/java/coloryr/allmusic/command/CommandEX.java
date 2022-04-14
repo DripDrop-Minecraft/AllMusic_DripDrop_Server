@@ -47,11 +47,10 @@ public class CommandEX {
             } else if (PlayMusic.isHave(musicID)) {
                 AllMusic.side.sendMessage(sender, AllMusic.getMessage().getAddMusic().getExistMusic());
             } else {
-                if (AllMusic.getConfig().isUseCost() && AllMusic.vault != null) {
-                    if (!AllMusic.vault.check(name, AllMusic.getConfig().getAddMusicCost())) {
-                        AllMusic.side.sendMessage(sender, AllMusic.getMessage().getCost().getNoMoney());
-                        return;
-                    }
+                if (AllMusic.getConfig().isUseCost() && AllMusic.vault != null
+                        && !AllMusic.vault.check(name, AllMusic.getConfig().getAddMusicCost())) {
+                    AllMusic.side.sendMessage(sender, AllMusic.getMessage().getCost().getNoMoney());
+                    return;
                 }
                 AllMusic.getConfig().RemoveNoMusicPlayer(name);
                 if (AllMusic.side.NeedPlay()) {
@@ -71,19 +70,24 @@ public class CommandEX {
                 }
             }
         } else {
-            // 如果传入的参数不是网易云音乐的曲目链接或者曲目数字ID，就走外部曲目链接的解析逻辑
-            // 目前仅适配了网站 http://tools.liumingye.cn/music/?page=searchPage 的歌曲链接
-            // 并且不能解析播放FLAC的音源
-            if (musicID.contains("listenSong.do") && musicID.contains("contentId")
-                    && musicID.contains("toneFlag") && musicID.contains("&resourceType=2&")) {
-                MusicObj obj = new MusicObj();
-                obj.isUrl = true;
-                obj.url = musicID;
-                PlayMusic.addTask(obj);
-                AllMusic.side.sendMessage(sender, AllMusic.getMessage().getAddMusic().getSuccess());
-            } else {
-                AllMusic.side.sendMessage(sender, AllMusic.getMessage().getAddMusic().getBadUrl());
-            }
+            myFreeMP3(musicID, name, sender);
+        }
+    }
+
+    private static void myFreeMP3(String url, String name, Object sender) {
+        // 如果传入的参数不是网易云音乐的曲目链接或者曲目数字ID，就走外部曲目链接的解析逻辑
+        // 本方法适配的是网站 http://tools.liumingye.cn/music/?page=searchPage 的歌曲链接
+        // 并且不能解析播放FLAC的音源
+        if (url.contains("listenSong.do") && url.contains("contentId")
+                && url.contains("toneFlag") && url.contains("&resourceType=2&")) {
+            MusicObj obj = new MusicObj();
+            obj.isUrl = true;
+            obj.url = url;
+            obj.name = name;
+            PlayMusic.addTask(obj);
+            AllMusic.side.sendMessage(sender, AllMusic.getMessage().getAddMusic().getSuccess());
+        } else {
+            AllMusic.side.sendMessage(sender, AllMusic.getMessage().getAddMusic().getBadUrl());
         }
     }
 
@@ -186,7 +190,7 @@ public class CommandEX {
                 AllMusic.side.sendMessage(sender, AllMusic.getMessage().getVote().getNoPermission());
                 return;
             }
-            if (PlayMusic.getSize() == 0 && AllMusic.getConfig().getPlayList().size() == 0) {
+            if (PlayMusic.getSize() == 0 && AllMusic.getConfig().getPlayList().isEmpty()) {
                 AllMusic.side.sendMessage(sender, AllMusic.getMessage().getMusicPlay().getNoPlay());
             } else if (PlayMusic.voteTime == 0) {
                 PlayMusic.voteTime = 30;

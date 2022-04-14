@@ -19,11 +19,12 @@ public class SongInfo {
 
     private boolean isList;
 
-    public SongInfo(String Name, String Url, int Length) {
+    public SongInfo(String player, String Name, String Url, int Length) {
         this.length = Length;
         playerUrl = Url;
         this.name = Name;
-        id = alia = call = al = author = "";
+        call = player;
+        id = alia = al = author = "--";
         isList = false;
     }
 
