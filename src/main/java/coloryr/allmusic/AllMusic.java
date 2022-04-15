@@ -26,7 +26,7 @@ import java.util.Map;
 
 public class AllMusic {
     public static final String channel = "allmusic:channel";
-    public static final String version = "2.15.3";
+    public static final String version = "2.15.4";
 
     private static final Map<String, SearchPage> searchSave = new HashMap<>();
     private static final List<String> votePlayer = new ArrayList<>();
@@ -242,7 +242,7 @@ public class AllMusic {
     }
 
     public void init(File file) {
-        log.info("§d[AllMusic]§2§e正在启动，感谢使用，本插件交流群：571239090");
+        log.info("§d[AllMusic]§2§e正在启动，感谢使用，源项目AllMusic_P交流群：571239090");
         try {
             if (!file.exists())
                 file.mkdir();

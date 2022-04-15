@@ -24,7 +24,7 @@ public class MusicPlayOBJ {
         NoPlayMusic = "§d[AllMusic]§2你不会再收到点歌了！想要再次参与点歌就点一首歌吧！";
         Switch = "§d[AllMusic]§2切换到玩家歌曲";
         AddMusic = "§d[AllMusic]§2音乐列表添加 %MusicName% | %MusicAuthor% | %MusicAl% | %MusicAlia%";
-        PlayerAdd = "§d[AllMusic]§2%PlayerName%点歌：%MusicID%";
+        PlayerAdd = "§d[AllMusic]§2玩家%PlayerName%点歌：%MusicID%";
         MusicInfo = "%MusicName% | %MusicAuthor% | %MusicAl% | %MusicAlia% | by: %PlayerName%";
         Trail = "§d[AllMusic]§2该音乐为试听音乐";
     }
