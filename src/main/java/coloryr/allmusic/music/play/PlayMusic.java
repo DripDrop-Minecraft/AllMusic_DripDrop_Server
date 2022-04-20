@@ -163,7 +163,10 @@ public class PlayMusic {
             BufferedInputStream bis = new BufferedInputStream(con.getInputStream());
             Bitstream bt = new Bitstream(bis);
             Header h = bt.readFrame();
-            int le = (int) h.total_ms(b);
+            int le = 0;
+            if (h != null) {
+                le = (int) h.total_ms(b);
+            }
             String songName = AllMusic.getMessage().getCustom().getInfo() + getCustomSongId(arg);
             SongInfo info = new SongInfo(player, songName, arg, le);
             // 聊天栏展示“玩家xxx点歌：外部歌曲xxxxxxxx”

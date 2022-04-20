@@ -26,8 +26,7 @@ public class TabCommand {
         this.add("delete");
         this.add("addlist");
         this.add("clearlist");
-        this.add("initApi");
-        this.add("cancelApi");
+        this.add("url");
         this.add("login");
     }};
     private static final List<String> hudlist = new ArrayList<String>() {{

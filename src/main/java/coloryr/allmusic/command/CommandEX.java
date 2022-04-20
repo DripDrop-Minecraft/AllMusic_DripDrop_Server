@@ -150,6 +150,8 @@ public class CommandEX {
                         AllMusic.getMessage().getClick().Check, "/music ban ");
                 AllMusic.side.sendMessageSuggest(sender, AllMusic.getMessage().getHelp().getAdmin().getDelete(),
                         AllMusic.getMessage().getClick().Check, "/music delete ");
+                AllMusic.side.sendMessageSuggest(sender, AllMusic.getMessage().getHelp().getAdmin().getUrl(),
+                        AllMusic.getMessage().getClick().Check, "/music url ");
                 AllMusic.side.sendMessageSuggest(sender, AllMusic.getMessage().getHelp().getAdmin().getAddList(),
                         AllMusic.getMessage().getClick().Check, "/music addlist ");
                 AllMusic.side.sendMessageRun(sender, AllMusic.getMessage().getHelp().getAdmin().getClearList(),
@@ -347,6 +349,14 @@ public class CommandEX {
                 } else {
                     AllMusic.side.sendMessage(sender, "§d[AllMusic]§2请输入有效的ID");
                 }
+                return;
+            } else if (args[0].equalsIgnoreCase("url") && args.length == 2) {
+                MusicObj obj = new MusicObj();
+                obj.isUrl = true;
+                obj.url = args[1];
+                obj.name = name;
+                PlayMusic.addTask(obj);
+                AllMusic.side.bqt("§d[AllMusic]§2§e管理员" + obj.name + "点歌：" + (args[1] == null ? "" : args[1]));
                 return;
             } else if (args[0].equalsIgnoreCase("delete") && args.length == 2) {
                 if (!args[1].isEmpty() && Function.isInteger(args[1])) {

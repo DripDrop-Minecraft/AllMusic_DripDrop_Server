@@ -14,7 +14,7 @@ public class HelpNormalObj {
 
     public HelpNormalObj() {
         Head = "§d[AllMusic]§2帮助手册";
-        Base = "§d[AllMusic]§2点歌：/music [网易云音乐歌曲ID或链接/MyFreeMP3歌曲链接]";
+        Base = "§d[AllMusic]§2点歌：/music [网易云音乐歌曲ID或链接/MyFreeMP3网站歌曲链接]";
         Stop = "§d[AllMusic]§2停止播放歌曲：/music stop";
         List = "§d[AllMusic]§2查看歌曲队列：/music list";
         Vote = "§d[AllMusic]§2投票切歌：/music vote";
