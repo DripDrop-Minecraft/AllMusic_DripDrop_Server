@@ -26,7 +26,7 @@ import java.util.Map;
 
 public class AllMusic {
     public static final String channel = "allmusic:channel";
-    public static final String version = "2.16.0";
+    public static final String version = "2.16.1";
 
     private static final Map<String, SearchPage> searchSave = new HashMap<>();
     private static final List<String> votePlayer = new ArrayList<>();
@@ -233,8 +233,10 @@ public class AllMusic {
                 String data = new Gson().toJson(obj);
                 AllMusic.side.send(data, name, null);
                 AllMusic.side.send("[Play]" + PlayGo.url, name, true);
-                AllMusic.side.task(() ->
-                        AllMusic.side.send("[Img]" + PlayMusic.nowPlayMusic.getPicUrl(), name, true), 15);
+                if (!PlayMusic.nowPlayMusic.isUrl()) {
+                    AllMusic.side.task(() ->
+                            AllMusic.side.send("[Img]" + PlayMusic.nowPlayMusic.getPicUrl(), name, true), 15);
+                }
                 AllMusic.side.task(() ->
                         AllMusic.side.send("[Pos]" + (PlayMusic.musicNowTime + 2000), name, true), 40);
             }, 10);

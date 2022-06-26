@@ -2,7 +2,7 @@
   "MaxList": 10,
   "MinVote": 3,
   "Delay": 0,
-  "Admin": ["CONSOLE","Color_yr"],
+  "Admin": ["CONSOLE","neverlag","Dell_G3"],
   "LoginUser": "",
   "NoMusicServer": [],
   "NoMusicPlayer": [],
@@ -39,5 +39,5 @@
   "SearchCost": 20,
   "AddMusicCost": 10,
   "MusicBR": "320000",
-  "Version": "2.14.9"
+  "Version": "2.16.1"
 }

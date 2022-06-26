@@ -6,7 +6,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "6.1.0"
 }
 
-version = "2.16.0"
+version = "2.16.1"
 
 repositories {
     mavenCentral()
@@ -24,7 +24,7 @@ dependencies {
     compileOnly("me.clip:placeholderapi:2.10.10")
 
     implementation("org.xerial:sqlite-jdbc:3.36.0.3")
-    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("com.google.code.gson:gson:2.9.0")
 
     annotationProcessor("com.velocitypowered:velocity-api:3.0.0")

@@ -42,6 +42,7 @@ public class TabCommand {
         this.add("pic");
         this.add("enable");
         this.add("reset");
+        this.add("picsize");
     }};
 
     public static List<String> getTabList(String name, String[] arg) {

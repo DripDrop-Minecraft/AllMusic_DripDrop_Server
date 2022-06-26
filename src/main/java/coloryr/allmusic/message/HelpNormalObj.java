@@ -11,6 +11,7 @@ public class HelpNormalObj {
     private String Select;
     private String Hud1;
     private String Hud2;
+    private String Hud3;
 
     public HelpNormalObj() {
         Head = "§d[AllMusic]§2帮助手册";
@@ -23,6 +24,7 @@ public class HelpNormalObj {
         Select = "§d[AllMusic]§2选择歌曲：/music select [歌曲序列号]";
         Hud1 = "§d[AllMusic]§2启用或关闭Hud：/music hud enable [位置]";
         Hud2 = "§d[AllMusic]§2设置某个Hud的位置：/music hud [位置] [x] [y]";
+        Hud3 = "§d[AllMusic]§2使用/music hud picsize [尺寸] 设置图片尺寸";
     }
 
     public boolean check(){

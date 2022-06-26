@@ -164,7 +164,9 @@ public class PlayMusic {
             Bitstream bt = new Bitstream(bis);
             Header h = bt.readFrame();
             int le = 0;
-            if (h != null) {
+            if (h == null) {
+                AllMusic.side.bqt("§d[AllMusic]§c未知音乐类型");
+            } else {
                 le = (int) h.total_ms(b);
             }
             String songName = AllMusic.getMessage().getCustom().getInfo() + getCustomSongId(arg);
